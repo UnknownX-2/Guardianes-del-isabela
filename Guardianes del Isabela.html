@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardianes del Isabela</title>
+    <style>
+        :root {
+            /* Degradado de Azul (limpio) a Verde (contaminado) */
+            --gradient-river: linear-gradient(to right, #0077b6, #00b4d8, #48cae4, #7fb069, #2d5a27);
+            --dark-text: #2c3e50;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg-light);
+            color: var(--dark-text);
+        }
+
+        header {
+            background: var(--gradient-river);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: -30px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+
+        /* Votación */
+        .vote-section {
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            font-weight: bold;
+        }
+
+        .btn-si { background: #00b4d8; color: white; }
+        .btn-no { background: #2d5a27; color: white; }
+        
+        button:hover { transform: scale(1.05); opacity: 0.9; }
+
+        /* Ideas */
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .btn-post {
+            background: #444;
+            color: white;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        #ideas-wall {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .idea-item {
+            background: #eefdf0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 5px solid #7fb069;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Guardianes del Isabela</h1>
+        <p>Protegiendo nuestras aguas del impacto de la contaminación</p>
+    </header>
+
+    <div class="container">
+        
+        <section class="card">
+            <h2>🚨 Diagnóstico del Río</h2>
+            <p>El Río Isabela es uno de los cauces más afectados por la descarga de desechos químicos y plásticos. Este proyecto busca dar voz a quienes quieren un cambio real.</p>
+        </section>
+
+        <section class="card vote-section">
+            <h2>¿Apoyas una ley de emergencia para el rescate del río?</h2>
+            <div class="btn-group">
+                <button class="btn-si" onclick="votar('si')">SÍ: <span id="v-si">0</span></button>
+                <button class="btn-no" onclick="votar('no')">NO: <span id="v-no">0</span></button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>💡 Propuestas Ciudadanas</h2>
+            <textarea id="user-idea" rows="4" placeholder="¿Qué solución propones para frenar la contaminación?"></textarea>
+            <button class="btn-post" onclick="subirIdea()">Publicar Propuesta</button>
+            
+            <div id="ideas-wall">
+                <div class="idea-item"><strong>Ejemplo:</strong> Instalar filtros industriales en las salidas de las fábricas.</div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Lógica de Votación
+        let counts = { si: 0, no: 0 };
+        function votar(opcion) {
+            counts[opcion]++;
+            document.getElementById('v-' + opcion).innerText = counts[opcion];
+        }
+
+        // Lógica de Mensajes
+        function subirIdea() {
+            const txt = document.getElementById('user-idea');
+            const wall = document.getElementById('ideas-wall');
+
+            if(txt.value.trim() !== "") {
+                const div = document.createElement('div');
+                div.className = 'idea-item';
+                div.innerHTML = `<strong>Propuesta:</strong> ${txt.value}`;
+                wall.prepend(div);
+                txt.value = "";
+            } else {
+                alert("Escribe una idea primero.");
+            }
+        }
+    </script>
+
+</body>
+</html>
